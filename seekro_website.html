@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareerCraft - AI-Powered Career Guidance</title>
+    <title>SeeKro - AI-Powered Career Guidance</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
@@ -40,6 +41,14 @@
             color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
+        }
+
+        /* Login Modal styles */
+        #login-modal-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #login-modal {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
         /* Advanced 3D Background */
@@ -1436,7 +1445,7 @@
                 <div class="logo-icon">
                     <i class="fas fa-brain"></i>
                 </div>
-                CareerCraft
+                SeeKro
             </div>
             <ul class="nav-menu">
                 <li><a href="#" class="nav-link" onclick="showPage('home')">Home</a></li>
@@ -1565,20 +1574,37 @@
 
                 <div class="dashboard-grid">
                     <div class="card holographic-border">
-                        <h3><i class="fas fa-bullseye"></i>Goal Tracker</h3>
-                        <div style="margin: 2rem 0;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-weight: 600;">
-                                <span>Overall Progress</span>
-                                <span style="color: var(--neon-blue);">68%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill progress-python" style="width: 68%;"></div>
+                        <h3><i class="fas fa-bullseye"></i>SeeKro Score</h3>
+                        <div class="my-4 flex justify-center items-center">
+                            <div class="relative w-48 h-48">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <!-- Full circle -->
+                                    <circle
+                                        stroke-width="10"
+                                        cx="50"
+                                        cy="50"
+                                        r="40"
+                                        fill="transparent"
+                                        stroke="url(#progressGradient)"
+                                        style="filter: drop-shadow(0 0 5px var(--neon-blue));">
+                                    </circle>
+                                    <defs>
+                                        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" style="stop-color:var(--neon-blue)" />
+                                            <stop offset="100%" style="stop-color:var(--neon-purple)" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span class="text-5xl font-bold text-white font-mono" style="text-shadow: 0 0 10px var(--neon-purple);">8.7</span>
+                                    <span class="text-sm text-gray-400">SeeKro Score</span>
+                                </div>
                             </div>
                         </div>
-                        <div style="background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; margin-top: 1.5rem;">
-                            <p style="color: var(--text-primary); margin-bottom: 0.5rem; font-weight: 600;">🎯 Current Focus</p>
-                            <p style="color: var(--text-secondary);">Advanced Machine Learning Techniques</p>
-                            <p style="color: var(--cyber-green); font-size: 0.9rem; margin-top: 1rem;">↗ 15% improvement this week!</p>
+                        <div class="bg-gray-500/10 p-4 rounded-xl mt-1">
+                            <p class="text-white text-center font-semibold mb-2">🎯 Current Focus</p>
+                            <p class="text-gray-300 text-center text-sm">Advanced Machine Learning Techniques</p>
+                            <p class="text-green-400 text-sm mt-3 text-center">↗ 15% improvement this week!</p>
                         </div>
                     </div>
 
@@ -1809,7 +1835,7 @@
                             <i class="fas fa-robot"></i>
                         </div>
                         <div>
-                            <h3 style="margin: 0; font-size: 1.3rem;">CareerCraft AI</h3>
+                            <h3 style="margin: 0; font-size: 1.3rem;">SeeKro AI</h3>
                             <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Your intelligent career companion</p>
                         </div>
                         <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;">
@@ -1919,15 +1945,10 @@
     <div id="success" class="page">
         <section class="success-stories">
             <div class="container">
-                <div style="text-align: center; margin-bottom: 4rem;">
-                    <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; background: linear-gradient(135deg, #39ff14 0%, #00d4ff 50%, #8b5cf6 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem;">Success Stories</h2>
-                    <p style="font-size: 1.2rem; color: var(--text-secondary);">Real people, real transformations, powered by AI guidance</p>
-                </div>
-
                 <div class="testimonial-grid">
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            <p>"CareerCraft's AI completely transformed my career trajectory. In just 8 months, I went from a junior analyst to a senior data scientist at Microsoft. The personalized learning path and mentor matching were game-changers!"</p>
+                            <p>"SeeKro's AI completely transformed my career trajectory. In just 8 months, I went from a junior analyst to a senior data scientist at Microsoft. The personalized learning path and mentor matching were game-changers!"</p>
                         </div>
                         <div class="testimonial-author">
                             <div class="author-avatar">MK</div>
@@ -1943,23 +1964,7 @@
 
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            <p>"The AI-powered insights showed me skills I didn't even know I needed. The market intelligence feature helped me negotiate a $30k raise and land a role at Tesla. Absolutely incredible platform!"</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">JC</div>
-                            <div class="author-info">
-                                <h4>James Chen</h4>
-                                <p>ML Engineer at Tesla</p>
-                                <div style="color: #00d4ff; font-size: 0.8rem; margin-top: 0.3rem;">
-                                    <i class="fas fa-rocket" style="margin-right: 0.3rem;"></i>Career pivot in 6 months
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"From struggling freelancer to lead developer at Netflix - CareerCraft's mentorship network and skill tracking made all the difference. The AI knew exactly what I needed to focus on."</p>
+                            <p>"From struggling freelancer to lead developer at Netflix - SeeKro's mentorship network and skill tracking made all the difference. The AI knew exactly what I needed to focus on."</p>
                         </div>
                         <div class="testimonial-author">
                             <div class="author-avatar">SR</div>
@@ -1975,23 +1980,7 @@
 
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            <p>"The career roadmap was spot-on. Every milestone felt achievable, and the progress tracking kept me motivated. Now I'm running my own AI startup with funding from top VCs!"</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">DP</div>
-                            <div class="author-info">
-                                <h4>David Park</h4>
-                                <p>AI Startup Founder</p>
-                                <div style="color: #ec4899; font-size: 0.8rem; margin-top: 0.3rem;">
-                                    <i class="fas fa-lightbulb" style="margin-right: 0.3rem;"></i>$2M Series A funding
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"As a career changer from marketing to tech, I was lost. CareerCraft's AI created a perfect transition plan. 10 months later, I'm a product manager at Spotify!"</p>
+                            <p>"As a career changer from marketing to tech, I was lost. SeeKro's AI created a perfect transition plan. 10 months later, I'm a product manager at Spotify!"</p>
                         </div>
                         <div class="testimonial-author">
                             <div class="author-avatar">AL</div>
@@ -2007,7 +1996,7 @@
 
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            <p>"The networking suggestions were incredible - I connected with my future co-founder through CareerCraft! Our fintech startup just hit unicorn status. The AI truly understands career synergies."</p>
+                            <p>"The networking suggestions were incredible - I connected with my future co-founder through SeeKro! Our fintech startup just hit unicorn status. The AI truly understands career synergies."</p>
                         </div>
                         <div class="testimonial-author">
                             <div class="author-avatar">RT</div>
@@ -2376,13 +2365,13 @@
 
         // Enhanced Animation Functions
         function animateProgressBars() {
-            const progressBars = document.querySelectorAll('.progress-fill');
-            progressBars.forEach((bar, index) => {
+            // Handle linear progress bars that might exist elsewhere
+            const linearProgressBars = document.querySelectorAll('.progress-fill');
+            linearProgressBars.forEach((bar) => {
                 const rect = bar.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    setTimeout(() => {
-                        bar.style.width = bar.dataset.width || '0%';
-                    }, index * 200);
+                if (rect.top < window.innerHeight && rect.bottom >= 0 && !bar.classList.contains('animated')) {
+                    bar.classList.add('animated');
+                    // The animation is handled by the CSS transition when the width style is present
                 }
             });
         }
