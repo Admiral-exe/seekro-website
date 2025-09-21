@@ -203,6 +203,17 @@
             padding: 0.5rem 1rem;
             border-radius: 25px;
         }
+        
+        /* Active Nav Link Style */
+        .nav-link.active-link {
+            color: var(--text-primary);
+            background: var(--glass-bg);
+        }
+        
+        .nav-link.active-link::after {
+             width: 80%;
+        }
+
 
         .nav-link:hover {
             color: var(--text-primary);
@@ -1518,6 +1529,19 @@
 
     <!-- Particle System -->
     <div class="particle-system" id="particleSystem"></div>
+    
+    <!-- Confirmation Modal (for clearing chat) -->
+    <div id="confirmation-modal-overlay" class="fixed inset-0 bg-black bg-opacity-80 hidden z-[10001] flex items-center justify-center p-4 transition-opacity duration-300">
+        <div id="confirmation-modal" class="bg-[var(--card-bg)] border border-[var(--border-glass)] rounded-2xl p-8 text-center holographic-border max-w-sm w-full">
+            <h3 class="text-xl font-bold mb-4">Are you sure?</h3>
+            <p class="text-[var(--text-secondary)] mb-6">This will permanently delete your entire chat history. This action cannot be undone.</p>
+            <div class="flex justify-center gap-4">
+                <button id="confirm-delete-btn" class="btn btn-primary" style="background: var(--secondary-gradient);">Confirm</button>
+                <button id="cancel-delete-btn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Navigation -->
     <nav id="navbar">
@@ -1529,12 +1553,12 @@
                 SeeKro
             </div>
             <ul class="nav-menu">
-                <li><a href="#" class="nav-link" onclick="showPage('home')">Home</a></li>
-                <li><a href="#" class="nav-link" onclick="showPage('features')">Features</a></li>
-                <li><a href="#" class="nav-link" onclick="showPage('dashboard')">Dashboard</a></li>
-                <li><a href="#" class="nav-link" onclick="showPage('chatbot')">AI Assistant</a></li>
-                <li><a href="#" class="nav-link" onclick="showPage('success')">Success Stories</a></li>
-                <li><a href="#" class="nav-link" onclick="showPage('updates')">Daily Updates</a></li>
+                <li><a href="#home" class="nav-link" data-page="home">Home</a></li>
+                <li><a href="#features" class="nav-link" data-page="features">Features</a></li>
+                <li><a href="#dashboard" class="nav-link" data-page="dashboard">Dashboard</a></li>
+                <li><a href="#chatbot" class="nav-link" data-page="chatbot">AI Assistant</a></li>
+                <li><a href="#success" class="nav-link" data-page="success">Success Stories</a></li>
+                <li><a href="#updates" class="nav-link" data-page="updates">Daily Updates</a></li>
             </ul>
             <a href="#" class="login-btn" onclick="event.preventDefault();">Login</a>
         </div>
@@ -1546,16 +1570,16 @@
     </button>
 
     <!-- Homepage -->
-    <div id="home" class="page active">
+    <div id="home" class="page">
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
                     <h1>Unlock Your Future with AI-Powered Career Guidance</h1>
                     <p>Personalized roadmaps, real-time job insights, and expert mentorship powered by cutting-edge artificial intelligence.</p>
                     <div class="cta-buttons">
-                        <a href="#" class="btn btn-primary" onclick="showPage('dashboard')">Get Started Free</a>
+                        <a href="#dashboard" class="btn btn-primary">Get Started Free</a>
                         <a href="#" class="btn btn-secondary" onclick="startDemo()">Watch Demo</a>
-                        <a href="#" class="btn btn-secondary" onclick="showPage('dashboard')">Go to My Dashboard</a>
+                        <a href="#dashboard" class="btn btn-secondary">Go to My Dashboard</a>
                     </div>
                 </div>
             </div>
@@ -1622,7 +1646,7 @@
                     <h2>Join the Future of Career Guidance</h2>
                     <p style="font-size: 1.2rem; color: rgba(255,255,255,0.9); margin-bottom: 2rem;">Transform your career with AI-powered insights</p>
                     <div class="cta-buttons">
-                        <a href="#" class="btn" onclick="showPage('dashboard')">Get Started Free</a>
+                        <a href="#dashboard" class="btn">Get Started Free</a>
                         <a href="#" class="btn" onclick="startDemo()">Watch Demo</a>
                     </div>
                 </div>
@@ -2070,8 +2094,8 @@
                     <h2>Ready to Write Your Success Story?</h2>
                     <p style="font-size: 1.2rem; color: rgba(255,255,255,0.9); margin-bottom: 2rem;">Join thousands who've transformed their careers with AI-powered guidance</p>
                     <div class="cta-buttons">
-                        <a href="#" class="btn" onclick="showPage('dashboard')">Start Your Journey</a>
-                        <a href="#" class="btn" onclick="showPage('chatbot')">Talk to AI Assistant</a>
+                        <a href="#dashboard" class="btn">Start Your Journey</a>
+                        <a href="#chatbot" class="btn">Talk to AI Assistant</a>
                     </div>
                 </div>
             </div>
@@ -2200,11 +2224,11 @@
             <div class="footer-logo">SeeKro</div>
              <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">The future of AI-powered career guidance is here.</p>
             <ul class="footer-links">
-                <li><a href="#" onclick="showPage('home')">Home</a></li>
-                <li><a href="#" onclick="showPage('features')">Features</a></li>
-                <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
-                <li><a href="#" onclick="showPage('success')">Success Stories</a></li>
-                <li><a href="#" onclick="showPage('updates')">Daily Updates</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#success">Success Stories</a></li>
+                <li><a href="#updates">Daily Updates</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
             <div class="social-links">
@@ -2225,17 +2249,17 @@
         // Firebase Imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, collection, addDoc, serverTimestamp, onSnapshot, query, getDocs, writeBatch, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, getDocs, writeBatch, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
         // --- GLOBAL VARIABLES ---
         let db, auth, userId, chatUnsubscribe;
         let isTyping = false;
+        let isTransitioning = false;
         
         const converter = new showdown.Converter();
 
         // --- FIREBASE & AUTH SETUP ---
         
-        // These global variables are provided by the execution environment.
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'seekro-dev-app';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "AIza...", authDomain: "...", projectId: "..." };
 
@@ -2244,22 +2268,19 @@
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                setLogLevel('debug'); // for detailed logs
+                // setLogLevel('debug'); 
 
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
-                        console.log("User is signed in with UID:", user.uid);
                         userId = user.uid;
                         await loadChatHistory();
                     } else {
-                        console.log("User is not signed in. Attempting to sign in...");
                         await authenticateUser();
                     }
                 });
 
             } catch (error) {
                 console.error("Firebase initialization failed:", error);
-                // Display a user-friendly error message on the page
                 const chatMessages = document.getElementById('chatMessages');
                 if(chatMessages) chatMessages.innerHTML = `<p style="color: var(--neon-pink); text-align: center;">Could not connect to the services. Please refresh and try again.</p>`;
             }
@@ -2280,7 +2301,7 @@
         // --- API CALLS (GEMINI) ---
         
         async function callGeminiAPI(fullChatHistory) {
-            const apiKey = ""; // API key is handled by the environment
+            const apiKey = ""; 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
             const systemPrompt = "You are SeeKro AI, a friendly, expert AI career assistant. Your goal is to provide insightful, helpful, and encouraging guidance on career planning, skill development, job market trends, and interview preparation. Format your responses using markdown for clarity (e.g., bolding, bullet points). Keep your tone positive and supportive.";
@@ -2299,8 +2320,7 @@
 
             let response;
             try {
-                // Exponential backoff for retries
-                let backoff = 1000; // Start with 1 second
+                let backoff = 1000;
                 for (let i=0; i < 5; i++) {
                     response = await fetch(apiUrl, {
                         method: 'POST',
@@ -2308,7 +2328,6 @@
                         body: JSON.stringify(payload)
                     });
                     if (response.ok) break;
-                    console.warn(`API call failed with status ${response.status}. Retrying in ${backoff}ms...`);
                     await new Promise(resolve => setTimeout(resolve, backoff));
                     backoff *= 2;
                 }
@@ -2348,7 +2367,6 @@
             isTyping = true;
             toggleSendButton(true);
             
-            // Save user message to Firestore
             try {
                 await addDoc(collection(db, `artifacts/${appId}/users/${userId}/chats`), {
                     text: messageText,
@@ -2364,15 +2382,14 @@
 
             showTypingIndicator();
             
-            // Fetch the latest chat history to provide context to the AI
             const messagesRef = collection(db, `artifacts/${appId}/users/${userId}/chats`);
-            const q = query(messagesRef);
+            const q = query(messagesRef, orderBy("timestamp", "desc"), {limit: 20});
             const querySnapshot = await getDocs(q);
             let chatHistory = [];
             querySnapshot.forEach((doc) => {
                 chatHistory.push(doc.data());
             });
-            chatHistory.sort((a, b) => a.timestamp?.toMillis() - b.timestamp?.toMillis());
+            chatHistory.reverse();
 
 
             const aiResponseText = await callGeminiAPI(chatHistory);
@@ -2381,7 +2398,6 @@
             toggleSendButton(false);
             isTyping = false;
 
-            // Save AI response to Firestore
             try {
                 await addDoc(collection(db, `artifacts/${appId}/users/${userId}/chats`), {
                     text: aiResponseText,
@@ -2396,27 +2412,16 @@
         async function loadChatHistory() {
             if (!userId) return;
 
-            if (chatUnsubscribe) {
-                chatUnsubscribe(); // Detach old listener
-            }
+            if (chatUnsubscribe) chatUnsubscribe();
 
             const messagesRef = collection(db, `artifacts/${appId}/users/${userId}/chats`);
-            const q = query(messagesRef);
+            const q = query(messagesRef, orderBy("timestamp", "asc"));
 
             chatUnsubscribe = onSnapshot(q, async (querySnapshot) => {
                 const chatMessages = document.getElementById('chatMessages');
-                chatMessages.innerHTML = ''; // Clear existing messages
+                chatMessages.innerHTML = ''; 
                 
-                let messages = [];
-                querySnapshot.forEach((doc) => {
-                    messages.push(doc.data());
-                });
-
-                // Sort messages by timestamp client-side
-                messages.sort((a, b) => (a.timestamp?.toMillis() || 0) - (b.timestamp?.toMillis() || 0));
-
-                if (messages.length === 0) {
-                    // If no history, add and save the initial welcome message
+                if (querySnapshot.empty) {
                     const welcomeMessage = {
                         text: "Hello there! I'm your AI career assistant, powered by Gemini. Ask me anything about career planning, skills, or job market insights. How can I help you today?",
                         sender: 'ai',
@@ -2428,40 +2433,56 @@
                         console.error("Failed to add welcome message:", error);
                     }
                 } else {
-                    messages.forEach(msg => addMessageToUI(msg.text, msg.sender));
+                     querySnapshot.forEach((doc) => {
+                        const msg = doc.data();
+                        addMessageToUI(msg.text, msg.sender);
+                    });
                 }
             }, (error) => {
                 console.error("Error listening to chat history:", error);
             });
         }
         
-        window.clearChat = async function() {
+        window.clearChat = function() {
             if (!userId) return;
 
-            const confirmation = confirm("Are you sure you want to delete your entire chat history? This cannot be undone.");
-            if (!confirmation) return;
-            
-            if(chatUnsubscribe) chatUnsubscribe(); // Stop listening
-            
-            const messagesRef = collection(db, `artifacts/${appId}/users/${userId}/chats`);
-            const q = query(messagesRef);
-            const querySnapshot = await getDocs(q);
+            const modalOverlay = document.getElementById('confirmation-modal-overlay');
+            const confirmBtn = document.getElementById('confirm-delete-btn');
+            const cancelBtn = document.getElementById('cancel-delete-btn');
 
-            const batch = writeBatch(db);
-            querySnapshot.forEach((doc) => {
-                batch.delete(doc.ref);
-            });
+            modalOverlay.classList.remove('hidden');
 
-            try {
-                await batch.commit();
-                console.log("Chat history cleared.");
-                await loadChatHistory(); // Reload to get welcome message
-            } catch (error) {
-                console.error("Error clearing chat history:", error);
-                await loadChatHistory(); // Re-attach listener even if delete fails
-            }
+            const handleConfirm = async () => {
+                if (chatUnsubscribe) chatUnsubscribe();
+                
+                const messagesRef = collection(db, `artifacts/${appId}/users/${userId}/chats`);
+                const querySnapshot = await getDocs(messagesRef);
+
+                const batch = writeBatch(db);
+                querySnapshot.forEach((doc) => {
+                    batch.delete(doc.ref);
+                });
+
+                try {
+                    await batch.commit();
+                    await loadChatHistory(); 
+                } catch (error) {
+                    console.error("Error clearing chat history:", error);
+                    await loadChatHistory(); 
+                }
+                closeModal();
+            };
+
+            const closeModal = () => {
+                modalOverlay.classList.add('hidden');
+                confirmBtn.removeEventListener('click', handleConfirm);
+                cancelBtn.removeEventListener('click', closeModal);
+            };
+
+            confirmBtn.addEventListener('click', handleConfirm, { once: true });
+            cancelBtn.addEventListener('click', closeModal, { once: true });
         }
-        
+
         function addMessageToUI(text, sender) {
             const messagesContainer = document.getElementById('chatMessages');
             if(!messagesContainer) return;
@@ -2497,7 +2518,7 @@
             setTimeout(() => {
                 document.getElementById('chatInput').value = message;
                 sendMessage();
-            }, 300); // Wait for page transition
+            }, 300); 
         }
 
         function showTypingIndicator() {
@@ -2530,62 +2551,67 @@
         // --- UI & ANIMATIONS ---
 
         function init3DBackground() {
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true });
-            
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById('threejs-bg').appendChild(renderer.domElement);
-
-            const geometry = new THREE.IcosahedronGeometry(0.5, 1);
-            const material = new THREE.MeshBasicMaterial({ 
-                color: 0x00d4ff, 
-                wireframe: true, 
-                transparent: true, 
-                opacity: 0.3 
-            });
-
-            const shapes = [];
-            for (let i = 0; i < 50; i++) {
-                const mesh = new THREE.Mesh(geometry, material);
-                mesh.position.set(
-                    Math.random() * 20 - 10,
-                    Math.random() * 20 - 10,
-                    Math.random() * 20 - 10
-                );
-                mesh.rotation.set(
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI
-                );
-                shapes.push(mesh);
-                scene.add(mesh);
-            }
-
-            camera.position.z = 5;
-
-            function animate() {
-                requestAnimationFrame(animate);
+            try {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ alpha: true });
                 
-                shapes.forEach((shape, index) => {
-                    shape.rotation.x += 0.005 + index * 0.0001;
-                    shape.rotation.y += 0.008 + index * 0.0001;
-                    shape.position.y += Math.sin(Date.now() * 0.001 + index) * 0.002;
-                });
-                
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
-            });
+                document.getElementById('threejs-bg').appendChild(renderer.domElement);
+
+                const geometry = new THREE.IcosahedronGeometry(0.5, 1);
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: 0x00d4ff, 
+                    wireframe: true, 
+                    transparent: true, 
+                    opacity: 0.3 
+                });
+
+                const shapes = [];
+                for (let i = 0; i < 50; i++) {
+                    const mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(
+                        Math.random() * 20 - 10,
+                        Math.random() * 20 - 10,
+                        Math.random() * 20 - 10
+                    );
+                    mesh.rotation.set(
+                        Math.random() * Math.PI,
+                        Math.random() * Math.PI,
+                        Math.random() * Math.PI
+                    );
+                    shapes.push(mesh);
+                    scene.add(mesh);
+                }
+
+                camera.position.z = 5;
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    
+                    shapes.forEach((shape, index) => {
+                        shape.rotation.x += 0.005 + index * 0.0001;
+                        shape.rotation.y += 0.008 + index * 0.0001;
+                        shape.position.y += Math.sin(Date.now() * 0.001 + index) * 0.002;
+                    });
+                    
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            } catch (e) {
+                console.warn("Three.js background failed to initialize.", e);
+            }
         }
 
         function createParticleSystem() {
             const particleSystem = document.getElementById('particleSystem');
+            if (!particleSystem) return;
             const particleCount = 80;
             
             for (let i = 0; i < particleCount; i++) {
@@ -2604,23 +2630,36 @@
             }
         }
 
-        window.showPage = function(pageId) {
+        function showPage(pageId) {
+            if (isTransitioning) return;
+            
             const currentPage = document.querySelector('.page.active');
             const targetPage = document.getElementById(pageId);
+
+            if (!targetPage || currentPage === targetPage) return;
             
-            if (currentPage === targetPage) return;
+            isTransitioning = true;
             
-            if (currentPage) {
-                currentPage.style.opacity = '0';
-                currentPage.style.transform = 'translateY(-20px)';
-                
-                setTimeout(() => {
-                    currentPage.classList.remove('active');
-                    currentPage.style.transform = 'translateY(0)';
-                }, 300);
-            }
-            
-            setTimeout(() => {
+            // Update nav link active state
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active-link'));
+            const activeLink = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+            if (activeLink) activeLink.classList.add('active-link');
+
+            const transitionOut = () => {
+                if (currentPage) {
+                    currentPage.style.opacity = '0';
+                    currentPage.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        currentPage.classList.remove('active');
+                        currentPage.style.transform = 'translateY(0)';
+                        transitionIn();
+                    }, 300);
+                } else {
+                    transitionIn();
+                }
+            };
+
+            const transitionIn = () => {
                 targetPage.classList.add('active');
                 targetPage.style.opacity = '0';
                 targetPage.style.transform = 'translateY(20px)';
@@ -2628,16 +2667,17 @@
                 setTimeout(() => {
                     targetPage.style.opacity = '1';
                     targetPage.style.transform = 'translateY(0)';
+                    if (pageId === 'dashboard') {
+                       animateProgressBars();
+                    }
+                    isTransitioning = false;
                 }, 50);
-            }, 300);
+            };
             
-            window.history.pushState({}, '', `#${pageId}`);
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            if (pageId === 'dashboard') {
-                setTimeout(() => animateProgressBars(), 600);
-            }
+            transitionOut();
         }
+
 
         window.expandMilestone = function(element) {
             element.style.transform = 'scale(1.05)';
@@ -2760,25 +2800,7 @@
             
             nextStep();
         }
-
-        function handleScroll() {
-            const nav = document.getElementById('navbar');
-            const scrolled = window.scrollY > 50;
-            nav.classList.toggle('scrolled', scrolled);
-            
-            const animateElements = document.querySelectorAll('.card, .feature-card, .testimonial-card');
-            animateElements.forEach(element => {
-                const rect = element.getBoundingClientRect();
-                const isVisible = rect.top < window.innerHeight * 0.8;
-                
-                if (isVisible && !element.classList.contains('animated')) {
-                    element.classList.add('animated');
-                    element.style.transform = 'translateY(0) scale(1)';
-                    element.style.opacity = '1';
-                }
-            });
-        }
-
+        
         // --- INITIALIZATION ---
         function initializeAppUI() {
             const animateElements = document.querySelectorAll('.card, .feature-card, .testimonial-card');
@@ -2788,30 +2810,87 @@
                 element.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
             });
             
-            if (typeof THREE !== 'undefined') {
-                init3DBackground();
-            }
-            
+            init3DBackground();
             createParticleSystem();
-            setTimeout(() => animateProgressBars(), 1000);
             
-            const hash = window.location.hash.substring(1);
-            if (hash && document.getElementById(hash)) {
-                setTimeout(() => showPage(hash), 500);
+            // Initial page setup based on URL hash
+            const hash = window.location.hash.substring(1) || 'home';
+            const initialPage = document.getElementById(hash);
+            if(initialPage) {
+                initialPage.classList.add('active');
+                initialPage.style.opacity = '1'; // Show initial page immediately
+                 if (hash === 'dashboard') {
+                   animateProgressBars();
+                }
+            } else {
+                document.getElementById('home').classList.add('active');
+                document.getElementById('home').style.opacity = '1';
+            }
+            // Set initial active nav link
+            const activeLink = document.querySelector(`.nav-link[data-page="${hash}"]`);
+            if (activeLink) activeLink.classList.add('active-link');
+
+
+            // Add event listeners to all nav links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('href').substring(1);
+                    if (document.getElementById(pageId)) {
+                        showPage(pageId);
+                        window.history.pushState(null, null, `#${pageId}`);
+                    }
+                });
+            });
+        }
+        
+        // --- SCROLL HANDLING (FIXED) ---
+        function handleScroll() {
+            // Update Navbar style on scroll
+            const nav = document.getElementById('navbar');
+            if (nav) {
+                nav.classList.toggle('scrolled', window.scrollY > 50);
+            }
+
+            // Animate elements that come into view
+            const animateElements = document.querySelectorAll('.card, .feature-card, .testimonial-card');
+            animateElements.forEach(element => {
+                if (element.classList.contains('is-visible')) return; // Don't re-animate
+                const rect = element.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight * 0.9;
+                
+                if (isVisible) {
+                    element.classList.add('is-visible');
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+
+            // Animate progress bars when they are visible
+            animateProgressBars();
+        }
+
+        // Performance optimization for scroll events
+        let ticking = false;
+        function requestTick() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
             }
         }
 
         // Event Listeners
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', requestTick);
         window.addEventListener('load', () => {
             initializeAppUI();
             initializeFirebase();
         });
         window.addEventListener('popstate', () => {
             const hash = window.location.hash.substring(1) || 'home';
-            if (document.getElementById(hash)) {
-                showPage(hash);
-            }
+            showPage(hash);
         });
 
         const additionalStyles = document.createElement('style');
