@@ -277,7 +277,7 @@
             min-height: 100vh;
             padding-top: 100px;
             opacity: 0;
-            transition: opacity 0.6s ease-in-out;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
         }
 
         .page.active {
@@ -627,6 +627,7 @@
             font-size: 1.2rem;
             position: relative;
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .milestone-completed {
@@ -964,15 +965,18 @@
             background: var(--neon-gradient);
             color: white;
         }
+        
+        /* Markdown rendering inside chat */
+        .message-content p { margin-bottom: 0.5rem; }
+        .message-content ul { list-style-position: inside; padding-left: 1rem; }
+        .message-content li { margin-bottom: 0.25rem; }
+
 
         .typing-indicator {
             display: none;
             align-items: center;
             gap: 0.5rem;
             padding: 1rem;
-            background: var(--glass-bg);
-            border-radius: 20px;
-            margin: 1rem 0;
         }
 
         .typing-dot {
@@ -1035,6 +1039,13 @@
             font-size: 1.3rem;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .send-btn .fa-spin {
+            font-size: 1.5rem;
         }
 
         .send-btn::before {
@@ -1339,6 +1350,76 @@
             font-size: 0.9rem;
         }
 
+        /* Footer Section */
+        footer {
+            padding: 4rem 2rem 2rem;
+            background: var(--dark-bg);
+            border-top: 1px solid var(--border-glass);
+            text-align: center;
+            position: relative;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--neon-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-blue);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-links a {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--neon-purple);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-glass);
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+
         /* Loading States */
         .loading {
             display: inline-block;
@@ -1453,7 +1534,7 @@
                 <li><a href="#" class="nav-link" onclick="showPage('dashboard')">Dashboard</a></li>
                 <li><a href="#" class="nav-link" onclick="showPage('chatbot')">AI Assistant</a></li>
                 <li><a href="#" class="nav-link" onclick="showPage('success')">Success Stories</a></li>
-                <li><a href="#" class="nav-link" onclick="event.preventDefault();">Pricing</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('updates')">Daily Updates</a></li>
             </ul>
             <a href="#" class="login-btn" onclick="event.preventDefault();">Login</a>
         </div>
@@ -1566,7 +1647,7 @@
                             <div style="font-size: 0.9rem; color: var(--text-secondary);">Skills Mastered</div>
                         </div>
                         <div style="text-align: center;">
-                            <div style="font-size: 2rem; font-weight: bold; color: var(--neon-pink);">8.7</div>
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--neon-pink);">92</div>
                             <div style="font-size: 0.9rem; color: var(--text-secondary);">Career Score</div>
                         </div>
                     </div>
@@ -1596,7 +1677,7 @@
                                     </defs>
                                 </svg>
                                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span class="text-5xl font-bold text-white font-mono" style="text-shadow: 0 0 10px var(--neon-purple);">8.7</span>
+                                    <span class="text-5xl font-bold text-white font-mono" style="text-shadow: 0 0 10px var(--neon-purple);">92</span>
                                     <span class="text-sm text-gray-400">SeeKro Score</span>
                                 </div>
                             </div>
@@ -1680,7 +1761,7 @@
                                 <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Mock Interview Session</h4>
                                 <p style="color: var(--text-secondary); font-size: 0.9rem">Scheduled for next Friday</p>
                                 <div style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">
-                                    <i class="fas fa-user-tie" style="margin-right: 0.3rem;"></i>With Dr. Sarah Mitchell
+                                    <i class="fas fa-user-tie" style="margin-right: 0.3rem;"></i>With T K Mehta
                                 </div>
                             </div>
                         </div>
@@ -1701,9 +1782,9 @@
                     <div class="card holographic-border">
                         <h3><i class="fas fa-user-graduate"></i>Your Mentor</h3>
                         <div class="mentor-card">
-                            <div class="mentor-avatar">SM</div>
+                            <div class="mentor-avatar">TK</div>
                             <div class="mentor-info" style="flex-grow: 1;">
-                                <h4 style="color: var(--text-primary); margin-bottom: 0.3rem;">Dr. Sarah Mitchell</h4>
+                                <h4 style="color: var(--text-primary); margin-bottom: 0.3rem;">T K Mehta</h4>
                                 <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.2rem;">Senior Data Scientist at Google</p>
                                 <p style="color: var(--text-secondary); font-size: 0.8rem;">15+ years in ML & AI</p>
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.8rem;">
@@ -1826,7 +1907,7 @@
             <div class="container">
                 <div style="text-align: center; margin-bottom: 4rem;">
                     <h2 style="font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 900; background: var(--holographic); background-size: 300% 300%; background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: holographic-text 6s ease-in-out infinite; margin-bottom: 1rem;">AI Career Assistant</h2>
-                    <p style="font-size: 1.2rem; color: var(--text-secondary);">Your intelligent career companion, powered by advanced AI</p>
+                    <p style="font-size: 1.2rem; color: var(--text-secondary);">Your intelligent career companion, powered by Gemini</p>
                 </div>
                 
                 <div class="chat-container">
@@ -1843,82 +1924,25 @@
                                 <div style="width: 8px; height: 8px; background: #39ff14; border-radius: 50%; animation: pulse 2s ease-in-out infinite;"></div>
                                 Online
                             </div>
-                            <button style="background: rgba(255,255,255,0.1); border: none; color: white; padding: 0.5rem; border-radius: 50%; cursor: pointer;" onclick="clearChat()">
+                            <button title="Clear Chat History" style="background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" onclick="clearChat()">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
                     </div>
                     
                     <div class="chat-messages" id="chatMessages">
-                        <div class="message" style="animation-delay: 0.1s;">
-                            <div class="message-avatar ai">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="message-content">
-                                <p>Hello Alex! 👋 I'm your AI career assistant. I can help you with:</p>
-                                <div style="margin: 1rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                                    <span style="background: rgba(255,255,255,0.1); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Career Planning</span>
-                                    <span style="background: rgba(255,255,255,0.1); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Skill Development</span>
-                                    <span style="background: rgba(255,255,255,0.1); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Job Market Insights</span>
-                                    <span style="background: rgba(255,255,255,0.1); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Interview Prep</span>
-                                </div>
-                                <p>What would you like to explore today?</p>
-                            </div>
-                        </div>
-                        
-                        <div class="message user" style="animation-delay: 0.3s;">
-                            <div class="message-avatar user">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="message-content">
-                                <p>How can I learn SQL effectively for my data science career transition?</p>
-                            </div>
-                        </div>
-                        
-                        <div class="message" style="animation-delay: 0.5s;">
-                            <div class="message-avatar ai">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="message-content">
-                                <p>Excellent question! Based on your current progress (72% SQL completion), here's your personalized SQL mastery roadmap:</p>
-                                <br>
-                                <p><strong>🎯 Phase 1: Core Foundations (You're here!)</strong></p>
-                                <p>✅ Basic queries (SELECT, WHERE, ORDER BY)<br>
-                                ✅ JOINs (INNER, LEFT, RIGHT, FULL)<br>
-                                🔄 Advanced filtering and sorting</p>
-                                <br>
-                                <p><strong>🚀 Phase 2: Data Science Focus (Next 2 weeks)</strong></p>
-                                <p>• Window functions for analytics<br>
-                                • Common Table Expressions (CTEs)<br>
-                                • Aggregate functions with GROUP BY<br>
-                                • Time-series data handling</p>
-                                <br>
-                                <p><strong>💡 Recommended Resources:</strong></p>
-                                <div style="margin: 1rem 0; display: grid; gap: 0.5rem;">
-                                    <div style="background: rgba(0,212,255,0.1); padding: 0.8rem; border-radius: 10px; border-left: 3px solid var(--neon-blue);">
-                                        <strong>Interactive:</strong> SQLBolt, HackerRank SQL
-                                    </div>
-                                    <div style="background: rgba(139,92,246,0.1); padding: 0.8rem; border-radius: 10px; border-left: 3px solid var(--neon-purple);">
-                                        <strong>Practice:</strong> Kaggle Learn SQL, LeetCode Database
-                                    </div>
-                                    <div style="background: rgba(236,72,153,0.1); padding: 0.8rem; border-radius: 10px; border-left: 3px solid var(--neon-pink);">
-                                        <strong>Real Data:</strong> Public datasets on GitHub
-                                    </div>
-                                </div>
-                                <p>Would you like me to create a custom 2-week study schedule, or do you have questions about any specific SQL concepts?</p>
-                            </div>
-                        </div>
-
-                        <div class="typing-indicator" id="typingIndicator">
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                            <span style="margin-left: 0.5rem; color: var(--text-secondary);">AI is typing...</span>
-                        </div>
+                        <!-- Messages will be dynamically inserted here -->
+                    </div>
+                    
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <span style="margin-left: 0.5rem; color: var(--text-secondary);">AI is typing...</span>
                     </div>
                     
                     <div class="chat-input">
-                        <input type="text" id="chatInput" placeholder="Ask me about careers, skills, job market trends, or anything else..." onkeypress="handleChatInput(event)">
+                        <input type="text" id="chatInput" placeholder="Ask me about careers, skills, or job market trends..." onkeypress="handleChatInput(event)">
                         <button class="send-btn" onclick="sendMessage()" id="sendButton">
                             <i class="fas fa-paper-plane"></i>
                         </button>
@@ -1945,6 +1969,10 @@
     <div id="success" class="page">
         <section class="success-stories">
             <div class="container">
+                 <div class="features-header">
+                    <h2>Success Stories</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-secondary); margin-top: 1rem;">See how SeeKro is changing careers and lives</p>
+                </div>
                 <div class="testimonial-grid">
                     <div class="testimonial-card">
                         <div class="testimonial-content">
@@ -2050,8 +2078,457 @@
         </section>
     </div>
 
-    <script>
-        // Initialize 3D Background
+    <!-- Daily Updates Page -->
+    <div id="updates" class="page">
+        <section class="features">
+            <div class="container">
+                <div class="features-header">
+                    <h2>Daily Updates & Insights</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-secondary); margin-top: 1rem;">Your daily dose of career intelligence, curated for you.</p>
+                </div>
+                <div class="dashboard-grid">
+                    <!-- Card 1: Tata Job Vacancies -->
+                    <div class="card holographic-border">
+                        <h3><i class="fas fa-building"></i> Openings at Tata Group</h3>
+                        <div class="update-list" style="max-height: 400px; overflow-y: auto; padding-right: 1rem;">
+                            <!-- Job Item -->
+                            <div class="milestone">
+                                <div class="milestone-icon milestone-progress" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6);"><i class="fas fa-briefcase"></i></div>
+                                <div style="flex-grow: 1;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">AI/ML Engineer</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Tata Consultancy Services - Bengaluru</p>
+                                    <a href="#" class="contact-btn" style="padding: 0.4rem 1rem; font-size: 0.8rem; margin-top: 0.8rem; display: inline-block;">Apply Now</a>
+                                </div>
+                            </div>
+                            <!-- Job Item -->
+                            <div class="milestone">
+                               <div class="milestone-icon milestone-progress" style="background: linear-gradient(135deg, #991b1b, #ef4444);"><i class="fas fa-car"></i></div>
+                                <div style="flex-grow: 1;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Automotive Designer</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Tata Motors - Pune</p>
+                                    <a href="#" class="contact-btn" style="padding: 0.4rem 1rem; font-size: 0.8rem; margin-top: 0.8rem; display: inline-block;">Apply Now</a>
+                                </div>
+                            </div>
+                             <!-- Job Item -->
+                            <div class="milestone">
+                               <div class="milestone-icon milestone-progress" style="background: linear-gradient(135deg, #065f46, #10b981);"><i class="fas fa-plane"></i></div>
+                                <div style="flex-grow: 1;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Aerospace Engineer</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Tata Advanced Systems - Hyderabad</p>
+                                    <a href="#" class="contact-btn" style="padding: 0.4rem 1rem; font-size: 0.8rem; margin-top: 0.8rem; display: inline-block;">Apply Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Upcoming Exams -->
+                    <div class="card holographic-border">
+                        <h3><i class="fas fa-pencil-alt"></i> Upcoming Indian Exams</h3>
+                         <div class="update-list" style="max-height: 400px; overflow-y: auto; padding-right: 1rem;">
+                            <!-- Exam Item -->
+                            <div class="milestone">
+                                <div class="milestone-icon milestone-pending"><i class="fas fa-university"></i></div>
+                                <div style="flex-grow: 1;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">UPSC Civil Services (Prelims)</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Application Deadline: Feb 2026</p>
+                                    <p style="color: #fbbf24; font-size: 0.8rem; margin-top: 0.5rem;">Exam Date: May 25, 2026</p>
+                                </div>
+                            </div>
+                            <!-- Exam Item -->
+                            <div class="milestone">
+                                <div class="milestone-icon milestone-pending"><i class="fas fa-calculator"></i></div>
+                                <div style="flex-grow: 1;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">CAT 2025</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Registration Opens: Aug 2025</p>
+                                     <p style="color: #fbbf24; font-size: 0.8rem; margin-top: 0.5rem;">Exam Date: Nov 24, 2025</p>
+                                </div>
+                            </div>
+                             <!-- Exam Item -->
+                            <div class="milestone">
+                                <div class="milestone-icon milestone-pending"><i class="fas fa-rupee-sign"></i></div>
+                                <div style="flex-grow: 1;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">RBI Grade B Officer</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Notification Expected: Oct 2025</p>
+                                    <p style="color: #fbbf24; font-size: 0.8rem; margin-top: 0.5rem;">Phase 1: Dec 2025</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3: Expert Articles -->
+                    <div class="card holographic-border">
+                        <h3><i class="fas fa-lightbulb"></i> Future Skill Needs</h3>
+                         <div class="update-list" style="max-height: 400px; overflow-y: auto; padding-right: 1rem;">
+                            <!-- Article Item -->
+                            <div class="milestone">
+                                <div class="milestone-icon milestone-completed" style="background: var(--accent-gradient);"><i class="fas fa-brain"></i></div>
+                                 <div style="flex-grow: 1;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">The Rise of AI Ethics Officers</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Why every tech company will need one by 2030.</p>
+                                     <a href="#" class="contact-btn" style="padding: 0.4rem 1rem; font-size: 0.8rem; margin-top: 0.8rem; display: inline-block;">Read More</a>
+                                </div>
+                            </div>
+                             <!-- Article Item -->
+                            <div class="milestone">
+                                 <div class="milestone-icon milestone-completed" style="background: var(--accent-gradient);"><i class="fas fa-atom"></i></div>
+                                 <div style="flex-grow: 1;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Quantum Computing: The Next Frontier</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Skills you need to get started in the quantum race.</p>
+                                     <a href="#" class="contact-btn" style="padding: 0.4rem 1rem; font-size: 0.8rem; margin-top: 0.8rem; display: inline-block;">Read More</a>
+                                </div>
+                            </div>
+                             <!-- Article Item -->
+                            <div class="milestone">
+                                 <div class="milestone-icon milestone-completed" style="background: var(--accent-gradient);"><i class="fas fa-leaf"></i></div>
+                                 <div style="flex-grow: 1;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Green Tech & Sustainability Roles</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Exploring the booming job market in sustainability.</p>
+                                     <a href="#" class="contact-btn" style="padding: 0.4rem 1rem; font-size: 0.8rem; margin-top: 0.8rem; display: inline-block;">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">SeeKro</div>
+             <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">The future of AI-powered career guidance is here.</p>
+            <ul class="footer-links">
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('features')">Features</a></li>
+                <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
+                <li><a href="#" onclick="showPage('success')">Success Stories</a></li>
+                <li><a href="#" onclick="showPage('updates')">Daily Updates</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="social-links">
+                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 SeeKro. All Rights Reserved. Your Future, Amplified by AI.
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <script type="module">
+        // Firebase Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, collection, addDoc, serverTimestamp, onSnapshot, query, getDocs, writeBatch, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // --- GLOBAL VARIABLES ---
+        let db, auth, userId, chatUnsubscribe;
+        let isTyping = false;
+        
+        const converter = new showdown.Converter();
+
+        // --- FIREBASE & AUTH SETUP ---
+        
+        // These global variables are provided by the execution environment.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'seekro-dev-app';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "AIza...", authDomain: "...", projectId: "..." };
+
+        async function initializeFirebase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                setLogLevel('debug'); // for detailed logs
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        console.log("User is signed in with UID:", user.uid);
+                        userId = user.uid;
+                        await loadChatHistory();
+                    } else {
+                        console.log("User is not signed in. Attempting to sign in...");
+                        await authenticateUser();
+                    }
+                });
+
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+                // Display a user-friendly error message on the page
+                const chatMessages = document.getElementById('chatMessages');
+                if(chatMessages) chatMessages.innerHTML = `<p style="color: var(--neon-pink); text-align: center;">Could not connect to the services. Please refresh and try again.</p>`;
+            }
+        }
+
+        async function authenticateUser() {
+             try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Authentication failed:", error);
+            }
+        }
+
+        // --- API CALLS (GEMINI) ---
+        
+        async function callGeminiAPI(fullChatHistory) {
+            const apiKey = ""; // API key is handled by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const systemPrompt = "You are SeeKro AI, a friendly, expert AI career assistant. Your goal is to provide insightful, helpful, and encouraging guidance on career planning, skill development, job market trends, and interview preparation. Format your responses using markdown for clarity (e.g., bolding, bullet points). Keep your tone positive and supportive.";
+            
+            const contents = fullChatHistory.map(msg => ({
+                role: msg.sender === 'ai' ? 'model' : 'user',
+                parts: [{ text: msg.text }]
+            }));
+
+            const payload = {
+                contents: contents,
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            let response;
+            try {
+                // Exponential backoff for retries
+                let backoff = 1000; // Start with 1 second
+                for (let i=0; i < 5; i++) {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (response.ok) break;
+                    console.warn(`API call failed with status ${response.status}. Retrying in ${backoff}ms...`);
+                    await new Promise(resolve => setTimeout(resolve, backoff));
+                    backoff *= 2;
+                }
+
+                if (!response.ok) {
+                    throw new Error(`API request failed after retries with status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!text) {
+                    throw new Error("Invalid response structure from API.");
+                }
+                return text;
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                return "I'm having trouble connecting to my brain right now. Please try again in a moment.";
+            }
+        }
+
+        // --- CHAT FUNCTIONALITY ---
+        
+        window.handleChatInput = function(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        window.sendMessage = async function() {
+            const input = document.getElementById('chatInput');
+            const messageText = input.value.trim();
+            
+            if (messageText === '' || isTyping || !userId) return;
+            
+            input.value = '';
+            isTyping = true;
+            toggleSendButton(true);
+            
+            // Save user message to Firestore
+            try {
+                await addDoc(collection(db, `artifacts/${appId}/users/${userId}/chats`), {
+                    text: messageText,
+                    sender: 'user',
+                    timestamp: serverTimestamp()
+                });
+            } catch (error) {
+                console.error("Error sending message to Firestore:", error);
+                toggleSendButton(false);
+                isTyping = false;
+                return;
+            }
+
+            showTypingIndicator();
+            
+            // Fetch the latest chat history to provide context to the AI
+            const messagesRef = collection(db, `artifacts/${appId}/users/${userId}/chats`);
+            const q = query(messagesRef);
+            const querySnapshot = await getDocs(q);
+            let chatHistory = [];
+            querySnapshot.forEach((doc) => {
+                chatHistory.push(doc.data());
+            });
+            chatHistory.sort((a, b) => a.timestamp?.toMillis() - b.timestamp?.toMillis());
+
+
+            const aiResponseText = await callGeminiAPI(chatHistory);
+
+            hideTypingIndicator();
+            toggleSendButton(false);
+            isTyping = false;
+
+            // Save AI response to Firestore
+            try {
+                await addDoc(collection(db, `artifacts/${appId}/users/${userId}/chats`), {
+                    text: aiResponseText,
+                    sender: 'ai',
+                    timestamp: serverTimestamp()
+                });
+            } catch (error) {
+                console.error("Error saving AI response to Firestore:", error);
+            }
+        }
+
+        async function loadChatHistory() {
+            if (!userId) return;
+
+            if (chatUnsubscribe) {
+                chatUnsubscribe(); // Detach old listener
+            }
+
+            const messagesRef = collection(db, `artifacts/${appId}/users/${userId}/chats`);
+            const q = query(messagesRef);
+
+            chatUnsubscribe = onSnapshot(q, async (querySnapshot) => {
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML = ''; // Clear existing messages
+                
+                let messages = [];
+                querySnapshot.forEach((doc) => {
+                    messages.push(doc.data());
+                });
+
+                // Sort messages by timestamp client-side
+                messages.sort((a, b) => (a.timestamp?.toMillis() || 0) - (b.timestamp?.toMillis() || 0));
+
+                if (messages.length === 0) {
+                    // If no history, add and save the initial welcome message
+                    const welcomeMessage = {
+                        text: "Hello there! I'm your AI career assistant, powered by Gemini. Ask me anything about career planning, skills, or job market insights. How can I help you today?",
+                        sender: 'ai',
+                        timestamp: serverTimestamp()
+                    };
+                    try {
+                        await addDoc(messagesRef, welcomeMessage);
+                    } catch (error) {
+                        console.error("Failed to add welcome message:", error);
+                    }
+                } else {
+                    messages.forEach(msg => addMessageToUI(msg.text, msg.sender));
+                }
+            }, (error) => {
+                console.error("Error listening to chat history:", error);
+            });
+        }
+        
+        window.clearChat = async function() {
+            if (!userId) return;
+
+            const confirmation = confirm("Are you sure you want to delete your entire chat history? This cannot be undone.");
+            if (!confirmation) return;
+            
+            if(chatUnsubscribe) chatUnsubscribe(); // Stop listening
+            
+            const messagesRef = collection(db, `artifacts/${appId}/users/${userId}/chats`);
+            const q = query(messagesRef);
+            const querySnapshot = await getDocs(q);
+
+            const batch = writeBatch(db);
+            querySnapshot.forEach((doc) => {
+                batch.delete(doc.ref);
+            });
+
+            try {
+                await batch.commit();
+                console.log("Chat history cleared.");
+                await loadChatHistory(); // Reload to get welcome message
+            } catch (error) {
+                console.error("Error clearing chat history:", error);
+                await loadChatHistory(); // Re-attach listener even if delete fails
+            }
+        }
+        
+        function addMessageToUI(text, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            if(!messagesContainer) return;
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = `message-avatar ${sender}`;
+            avatar.innerHTML = sender === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            
+            const htmlContent = converter.makeHtml(text);
+            content.innerHTML = htmlContent;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+            messagesContainer.appendChild(messageDiv);
+            
+            messageDiv.style.opacity = '0';
+            messageDiv.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                messageDiv.style.opacity = '1';
+                messageDiv.style.transform = 'translateY(0)';
+            }, 50);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        window.sendQuickMessage = function(message) {
+            showPage('chatbot');
+            setTimeout(() => {
+                document.getElementById('chatInput').value = message;
+                sendMessage();
+            }, 300); // Wait for page transition
+        }
+
+        function showTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.style.display = 'flex';
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        function toggleSendButton(isLoading) {
+            const sendButton = document.getElementById('sendButton');
+            const chatInput = document.getElementById('chatInput');
+            if (isLoading) {
+                sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                sendButton.disabled = true;
+                chatInput.disabled = true;
+            } else {
+                sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>';
+                sendButton.disabled = false;
+                chatInput.disabled = false;
+                chatInput.focus();
+            }
+        }
+        
+
+        // --- UI & ANIMATIONS ---
+
         function init3DBackground() {
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -2060,7 +2537,6 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             document.getElementById('threejs-bg').appendChild(renderer.domElement);
 
-            // Create floating geometric shapes
             const geometry = new THREE.IcosahedronGeometry(0.5, 1);
             const material = new THREE.MeshBasicMaterial({ 
                 color: 0x00d4ff, 
@@ -2108,7 +2584,6 @@
             });
         }
 
-        // Advanced Particle System
         function createParticleSystem() {
             const particleSystem = document.getElementById('particleSystem');
             const particleCount = 80;
@@ -2129,14 +2604,12 @@
             }
         }
 
-        // Enhanced Page Navigation with Smooth Transitions
-        function showPage(pageId) {
+        window.showPage = function(pageId) {
             const currentPage = document.querySelector('.page.active');
             const targetPage = document.getElementById(pageId);
             
             if (currentPage === targetPage) return;
             
-            // Fade out current page
             if (currentPage) {
                 currentPage.style.opacity = '0';
                 currentPage.style.transform = 'translateY(-20px)';
@@ -2147,7 +2620,6 @@
                 }, 300);
             }
             
-            // Fade in target page
             setTimeout(() => {
                 targetPage.classList.add('active');
                 targetPage.style.opacity = '0';
@@ -2159,133 +2631,15 @@
                 }, 50);
             }, 300);
             
-            // Update URL
             window.history.pushState({}, '', `#${pageId}`);
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            // Animate progress bars if dashboard
             if (pageId === 'dashboard') {
                 setTimeout(() => animateProgressBars(), 600);
             }
         }
 
-        // Enhanced Chat Functionality
-        let isTyping = false;
-        let messageCount = 0;
-
-        function handleChatInput(event) {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                sendMessage();
-            }
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            
-            if (message === '' || isTyping) return;
-            
-            addMessage(message, 'user');
-            input.value = '';
-            
-            // Show typing indicator
-            showTypingIndicator();
-            
-            // Simulate AI response with realistic delay
-            setTimeout(() => {
-                hideTypingIndicator();
-                const response = generateAIResponse(message, messageCount++);
-                addMessage(response, 'ai');
-            }, Math.random() * 2000 + 1500);
-        }
-
-        function sendQuickMessage(message) {
-            showPage('chatbot');
-            document.getElementById('chatInput').value = message;
-            sendMessage();
-        }
-
-        function addMessage(text, sender) {
-            const messagesContainer = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender === 'user' ? 'user' : ''}`;
-            
-            const avatar = document.createElement('div');
-            avatar.className = `message-avatar ${sender}`;
-            avatar.innerHTML = sender === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
-            
-            const content = document.createElement('div');
-            content.className = 'message-content';
-            content.innerHTML = sender === 'ai' ? formatAIResponse(text) : `<p>${text}</p>`;
-            
-            messageDiv.appendChild(avatar);
-            messageDiv.appendChild(content);
-            messagesContainer.appendChild(messageDiv);
-            
-            // Animate message entry
-            messageDiv.style.opacity = '0';
-            messageDiv.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                messageDiv.style.opacity = '1';
-                messageDiv.style.transform = 'translateY(0)';
-            }, 100);
-            
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function formatAIResponse(text) {
-            // Add some dynamic formatting to AI responses
-            let formatted = text;
-            
-            // Add loading animations for lists
-            formatted = formatted.replace(/• /g, '<span style="color: var(--neon-blue);">•</span> ');
-            formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong style="color: var(--neon-purple);">$1</strong>');
-            
-            return `<p>${formatted}</p>`;
-        }
-
-        function generateAIResponse(message, count) {
-            const responses = [
-                `Great question! Based on your current learning trajectory and market data, I'd recommend focusing on these key areas: <br><br><strong>🎯 Immediate Focus:</strong><br>• Advanced SQL window functions<br>• Python data manipulation with pandas<br>• Statistical analysis fundamentals<br><br><strong>📈 Market Insight:</strong><br>These skills are in the top 5 most demanded for data science roles, with 89% of job postings requiring them. Would you like me to create a personalized study plan?`,
-                
-                `Excellent insight! The current market shows tremendous opportunity in your target field. Here's what I'm seeing:<br><br><strong>💰 Salary Trends:</strong><br>• Entry-level: $75k - $95k<br>• Mid-level: $95k - $130k<br>• Senior: $130k - $180k+<br><br><strong>🚀 Growth Areas:</strong><br>• Machine Learning Engineering (+34%)<br>• Data Infrastructure (+28%)<br>• AI Ethics & Governance (+52%)<br><br>Your current skill progression puts you 73% of the way to mid-level competency. Keep going!`,
-                
-                `I love your proactive approach! Let me create a strategic roadmap for you:<br><br><strong>⏰ 30-Day Sprint Plan:</strong><br>Week 1-2: Complete advanced SQL concepts<br>Week 3: Portfolio project (recommendation system)<br>Week 4: Interview preparation & network expansion<br><br><strong>🎯 Success Metrics:</strong><br>• Complete 2 end-to-end projects<br>• Connect with 5 industry professionals<br>• Practice 20 technical interview questions<br><br>This approach has a 92% success rate based on similar user profiles. Ready to dive in?`,
-                
-                `Fantastic question! Your timing is perfect - I've analyzed current market conditions and here's what stands out:<br><br><strong>🔥 Hot Opportunities:</strong><br>• Remote data roles up 67% this quarter<br>• AI/ML positions growing 3x faster than average<br>• Startup equity packages increasingly competitive<br><br><strong>💡 Strategic Advantage:</strong><br>Your background in ${Math.random() > 0.5 ? 'analytics' : 'business'} gives you an edge - companies value domain expertise combined with technical skills.<br><br>Would you like me to identify specific companies that match your profile?`
-            ];
-            
-            return responses[count % responses.length];
-        }
-
-        function showTypingIndicator() {
-            isTyping = true;
-            const indicator = document.getElementById('typingIndicator');
-            indicator.style.display = 'flex';
-            const messagesContainer = document.getElementById('chatMessages');
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function hideTypingIndicator() {
-            isTyping = false;
-            const indicator = document.getElementById('typingIndicator');
-            indicator.style.display = 'none';
-        }
-
-        function clearChat() {
-            const messagesContainer = document.getElementById('chatMessages');
-            const messages = messagesContainer.querySelectorAll('.message');
-            messages.forEach((msg, index) => {
-                if (index > 2) { // Keep first 3 messages
-                    setTimeout(() => msg.remove(), index * 100);
-                }
-            });
-            messageCount = 0;
-        }
-
-        // Interactive Dashboard Functions
-        function expandMilestone(element) {
+        window.expandMilestone = function(element) {
             element.style.transform = 'scale(1.05)';
             element.style.boxShadow = '0 20px 40px rgba(0, 212, 255, 0.3)';
             setTimeout(() => {
@@ -2294,22 +2648,16 @@
             }, 200);
         }
 
-        function addSkill() {
-            const skills = ['TensorFlow', 'Docker', 'AWS', 'Tableau', 'R Programming', 'Spark', 'Kubernetes'];
+        window.addSkill = function() {
+             const skills = ['TensorFlow', 'Docker', 'AWS', 'Tableau', 'R Programming', 'Spark', 'Kubernetes'];
             const randomSkill = skills[Math.floor(Math.random() * skills.length)];
             
-            // Create a temporary notification
             const notification = document.createElement('div');
             notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: var(--neon-gradient);
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 25px;
-                z-index: 10000;
-                animation: slideInRight 0.5s ease-out;
+                position: fixed; top: 100px; right: 20px;
+                background: var(--neon-gradient); color: white;
+                padding: 1rem 2rem; border-radius: 25px;
+                z-index: 10000; animation: slideInRight 0.5s ease-out;
                 box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
             `;
             notification.innerHTML = `<i class="fas fa-plus" style="margin-right: 0.5rem;"></i>Added ${randomSkill} to your learning path!`;
@@ -2322,28 +2670,21 @@
             }, 3000);
         }
 
-        function openMentorChat() {
+        window.openMentorChat = function() {
             showPage('chatbot');
             setTimeout(() => {
-                addMessage("Hi Alex! I saw you wanted to connect. I'm excited to discuss your data science journey. What specific areas would you like to focus on in our next session?", 'ai');
+                sendQuickMessage("I'd like to chat with my mentor, T K Mehta.");
             }, 1000);
         }
 
-        function scheduleMeeting() {
+        window.scheduleMeeting = function() {
             const notification = document.createElement('div');
             notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: var(--card-bg);
-                border: 1px solid var(--border-glass);
-                backdrop-filter: blur(25px);
-                color: var(--text-primary);
-                padding: 2rem;
-                border-radius: 20px;
-                z-index: 10000;
-                max-width: 300px;
-                animation: slideInRight 0.5s ease-out;
+                position: fixed; top: 100px; right: 20px;
+                background: var(--card-bg); border: 1px solid var(--border-glass);
+                backdrop-filter: blur(25px); color: var(--text-primary);
+                padding: 2rem; border-radius: 20px; z-index: 10000;
+                max-width: 300px; animation: slideInRight 0.5s ease-out;
                 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             `;
             notification.innerHTML = `
@@ -2353,7 +2694,7 @@
                     </div>
                     <div>
                         <h4 style="margin: 0; color: var(--text-primary);">Meeting Scheduled!</h4>
-                        <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">With Dr. Sarah Mitchell</p>
+                        <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">With T K Mehta</p>
                     </div>
                 </div>
                 <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Tomorrow, 3:00 PM - Career Strategy Session</p>
@@ -2363,21 +2704,18 @@
             document.body.appendChild(notification);
         }
 
-        // Enhanced Animation Functions
         function animateProgressBars() {
-            // Handle linear progress bars that might exist elsewhere
             const linearProgressBars = document.querySelectorAll('.progress-fill');
             linearProgressBars.forEach((bar) => {
                 const rect = bar.getBoundingClientRect();
                 if (rect.top < window.innerHeight && rect.bottom >= 0 && !bar.classList.contains('animated')) {
                     bar.classList.add('animated');
-                    // The animation is handled by the CSS transition when the width style is present
                 }
             });
         }
         
 
-        function startDemo() {
+        window.startDemo = function() {
             const demoSteps = [
                 { page: 'dashboard', message: 'Welcome to your personalized dashboard!' },
                 { page: 'chatbot', message: 'Meet your AI career assistant!' },
@@ -2392,25 +2730,19 @@
                     showPage(step.page);
                     
                     setTimeout(() => {
-                        // Show demo tooltip
                         const tooltip = document.createElement('div');
                         tooltip.style.cssText = `
-                            position: fixed;
-                            top: 50%;
-                            left: 50%;
+                            position: fixed; top: 50%; left: 50%;
                             transform: translate(-50%, -50%);
-                            background: var(--neon-gradient);
-                            color: white;
-                            padding: 2rem;
-                            border-radius: 20px;
-                            z-index: 10001;
-                            text-align: center;
+                            background: var(--neon-gradient); color: white;
+                            padding: 2rem; border-radius: 20px;
+                            z-index: 10001; text-align: center;
                             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
                             backdrop-filter: blur(20px);
                         `;
                         tooltip.innerHTML = `
                             <h3 style="margin: 0 0 1rem 0;">${step.message}</h3>
-                            <button onclick="this.parentElement.remove(); nextDemoStep()" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 0.8rem 2rem; border-radius: 25px; cursor: pointer; font-weight: 600;">
+                            <button onclick="this.parentElement.remove(); window.nextDemoStep()" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 0.8rem 2rem; border-radius: 25px; cursor: pointer; font-weight: 600;">
                                 ${currentStep < demoSteps.length - 1 ? 'Next →' : 'Finish Demo'}
                             </button>
                         `;
@@ -2429,26 +2761,11 @@
             nextStep();
         }
 
-        // Enhanced Scroll Effects
-        function updateNavbar() {
+        function handleScroll() {
             const nav = document.getElementById('navbar');
             const scrolled = window.scrollY > 50;
-            
             nav.classList.toggle('scrolled', scrolled);
-        }
-
-        function handleScroll() {
-            updateNavbar();
-            animateProgressBars();
             
-            // Parallax effects
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            if (hero && document.getElementById('home').classList.contains('active')) {
-                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
-            }
-            
-            // Animate elements on scroll
             const animateElements = document.querySelectorAll('.card, .feature-card, .testimonial-card');
             animateElements.forEach(element => {
                 const rect = element.getBoundingClientRect();
@@ -2462,9 +2779,8 @@
             });
         }
 
-        // Initialize everything
-        function initialize() {
-            // Set initial animation states
+        // --- INITIALIZATION ---
+        function initializeAppUI() {
             const animateElements = document.querySelectorAll('.card, .feature-card, .testimonial-card');
             animateElements.forEach(element => {
                 element.style.transform = 'translateY(30px) scale(0.95)';
@@ -2472,18 +2788,13 @@
                 element.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
             });
             
-            // Initialize 3D background
             if (typeof THREE !== 'undefined') {
                 init3DBackground();
             }
             
-            // Create particle system
             createParticleSystem();
-            
-            // Animate progress bars on dashboard
             setTimeout(() => animateProgressBars(), 1000);
             
-            // Handle initial page based on URL
             const hash = window.location.hash.substring(1);
             if (hash && document.getElementById(hash)) {
                 setTimeout(() => showPage(hash), 500);
@@ -2492,60 +2803,25 @@
 
         // Event Listeners
         window.addEventListener('scroll', handleScroll);
-        window.addEventListener('load', initialize);
+        window.addEventListener('load', () => {
+            initializeAppUI();
+            initializeFirebase();
+        });
         window.addEventListener('popstate', () => {
-            const hash = window.location.hash.substring(1);
-            if (hash && document.getElementById(hash)) {
+            const hash = window.location.hash.substring(1) || 'home';
+            if (document.getElementById(hash)) {
                 showPage(hash);
             }
         });
 
-        // Add CSS animations for new elements
         const additionalStyles = document.createElement('style');
         additionalStyles.textContent = `
-            @keyframes slideInRight {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            
-            @keyframes slideOutRight {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-            
-            @keyframes badge-glow {
-                0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 110, 0.5); }
-                50% { box-shadow: 0 0 40px rgba(131, 56, 236, 0.8); }
-            }
-            
-            .animated {
-                animation: elementFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            }
-            
-            @keyframes elementFadeIn {
-                from {
-                    transform: translateY(30px) scale(0.95);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateY(0) scale(1);
-                    opacity: 1;
-                }
-            }
+            @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+            @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+            @keyframes badge-glow { 0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 110, 0.5); } 50% { box-shadow: 0 0 40px rgba(131, 56, 236, 0.8); } }
         `;
         document.head.appendChild(additionalStyles);
 
-        // Performance optimization
-        let ticking = false;
-        function requestTick() {
-            if (!ticking) {
-                requestAnimationFrame(handleScroll);
-                ticking = true;
-                setTimeout(() => { ticking = false; }, 16);
-            }
-        }
-        
-        window.addEventListener('scroll', requestTick);
     </script>
 </body>
 </html>
